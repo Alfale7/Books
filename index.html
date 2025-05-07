@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>المكتبة الرقمية - روضة وإبتدائية سمية بنت خياط </title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(to bottom, #eef4f9, #dceeff);
+      color: #333;
+      transition: all 0.4s ease;
+    }
+
+    body.dark-mode {
+      background: #1a1a1a;
+      color: #f0f0f0;
+    }
+
+    .announcement {
+      background-color: #005f8f;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      animation: slide 15s linear infinite;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    @keyframes slide {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    header {
+      background: linear-gradient(to left, #4682B4, #5f9ea0);
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    body.dark-mode header {
+      background: #333;
+    }
+
+    .logo {
+      width: 70px;
+      height: 70px;
+      border-radius: 10px;
+      object-fit: contain;
+      border: 3px solid #ffffff;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+      background-color: white;
+    }
+
+    .header-text {
+      text-align: center;
+      flex: 1;
+    }
+
+    .header-text h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    .header-text p {
+      margin: 5px 0 0;
+      font-size: 18px;
+    }
+
+    .mode-toggle {
+      background-color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .mode-toggle:hover {
+      background-color: #ddd;
+    }
+
+    .intro {
+      background: white;
+      margin: 30px auto;
+      padding: 25px 30px;
+      max-width: 900px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      line-height: 1.8;
+      border-right: 6px solid #5f9ea0;
+      border-left: 6px solid #5f9ea0;
+    }
+
+    body.dark-mode .intro {
+      background: #2b2b2b;
+      border-color: #888;
+    }
+
+    .search-bar {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .search-bar input {
+      padding: 10px;
+      width: 80%;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .filter-buttons {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .filter-buttons button {
+      margin: 5px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      background-color: #4682B4;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .filter-buttons button:hover {
+      background-color: #315f86;
+    }
+
+    .library {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto 50px;
+      padding: 20px;
+    }
+
+    .item {
+      background: linear-gradient(to right, #4682B4, #5f9ea0);
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      transition: transform 0.3s;
+    }
+
+    .item:hover {
+      transform: scale(1.05);
+    }
+
+    .item a {
+      text-decoration: none;
+      color: white;
+      font-size: 17px;
+    }
+
+    footer {
+      background: linear-gradient(to left, #4682B4, #5f9ea0);
+      color: #ffffff;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    body.dark-mode footer {
+      background: #222;
+    }
+
+    /* نافذة الترحيب */
+    #welcome-popup {
+      position: fixed;
+      top: 0; right: 0; bottom: 0; left: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #welcome-popup .popup-content {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    #welcome-popup button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #4682B4;
+      color: white;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- نافذة ترحيب -->
+  <div id="welcome-popup">
+    <div class="popup-content">
+      <img src="logo.jpg" alt="شعار المدرسة" style="width: 80px; height: 80px; border-radius: 8px; margin-bottom: 15px; border: 2px solid #4682B4;">
+      <h2 style="margin: 10px 0; color: #2c3e50;">مرحبًا بكم في المكتبة الرقمية</h2>
+      <p style="color: #555;">روضة وإبتدائية سمية بنت خياط ترحب بكم وتتمنى لكم تصفحاً مفيداً وممتعاً</p>
+      <button onclick="closePopup()">دخول</button>
+    </div>
+  </div>
+
+  <!-- شريط إعلان -->
+  <div class="announcement">تم إضافة مكتبة بيت الحكمة للكتب الرقمية - تابع التحديثات الجديدة أولاً بأول!</div>
+
+  <!-- الهيدر -->
+  <header>
+    <img src="logo.jpg" alt="شعار المدرسة" class="logo">
+    <div class="header-text">
+      <h1>المكتبة الرقمية</h1>
+      <p>روضة وإبتدائية سمية بنت خياط</p>
+    </div>
+    <button class="mode-toggle" onclick="toggleMode()">الوضع الليلي</button>
+
+  </header>
+<div style="text-align: center; margin: 20px auto;">
+  <iframe width="100%" height="315" src="https://www.youtube.com/embed/B9TtYphn8Q8"
+    title="كلمة خادم الحرمين الشريفين عن التعليم" frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen style="border-radius: 10px; max-width: 900px; display: block; margin: auto;">
+  </iframe>
+</div>
+
+  <!-- المحتوى -->
+  <div class="intro">
+    <p>
+      انطلاقًا من أهمية إثراء المحتوى الرقمي، تم إنشاء هذه المكتبة الرقمية لتكون مرجعًا موثوقًا للطلاب والمعلمين في الوصول إلى مصادر تعليمية متنوعة وموثوقة. تهدف هذه المنصة إلى تسهيل الوصول للمعلومات، وتحفيز التعلم الذاتي، ودعم العملية التعليمية بأدوات حديثة تسهم في تطوير المهارات والمعارف.
+    </p>
+    <p>
+      تحتوي المكتبة على روابط مباشرة لمنصات تعليمية معتمدة، وتعد امتدادًا لدور مركز مصادر التعلم في دعم المتعلمين والمعلمين.
+    </p>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" id="search" placeholder="ابحث عن منصة أو كتاب...">
+  </div>
+
+  <div class="filter-buttons">
+    <button onclick="filterItems('all')">الكل</button>
+    <button onclick="filterItems('book')">كتب</button>
+    <button onclick="filterItems('video')">فيديوهات</button>
+    <button onclick="filterItems('interactive')">تفاعلي</button>
+  </div>
+
+  <div class="library" id="library">
+    <div class="item book"><a href="https://ien.edu.sa" target="_blank">منصة عين التعليمية</a></div>
+    <div class="item interactive"><a href="https://www.kutubee.com/ar" target="_blank">منصة كتبي - كتب تفاعلية</a></div>
+    <div class="item book"><a href="https://ktby.net/" target="_blank">موقع كتبي - كتب الوزارة</a></div>
+    <div class="item book"><a href="https://www.ien.edu.sa/Home/DigitalLibrary" target="_blank">المكتبة الرقمية - عين</a></div>
+    <div class="item interactive"><a href="https://school-edu.com" target="_blank">منصة المدرسة</a></div>
+    <div class="item book"><a href="https://www.rwafed.com" target="_blank">روافد التعليمية</a></div>
+    <div class="item video"><a href="https://www.ientv.edu.sa/" target="_blank">قناة عين التعليمية</a></div>
+    <div class="item book"><a href="https://sdl.edu.sa/SDLPortal/Publishers.aspx" target="_blank">المكتبة الرقمية السعودية (SDL)</a></div>
+    <div class="item book"><a href="https://baytalhikma2.org/books" target="_blank">مكتبة بيت الحكمة للكتب الرقمية</a></div>
+  </div>
+
+<!-- نموذج التواصل -->
+<div style="max-width: 900px; margin: 40px auto;">
+  <h2 style="text-align:center; color:#2c3e50; margin-bottom: 20px;">نموذج التواصل مع إدارة المكتبة الرقمية </h2>
+  <iframe src="https://forms.gle/oAhgsuRvQPkBDfxp6" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0" style="border-radius: 12px; border: 1px solid #ccc;"></iframe>
+</div>
+
+  <!-- الفوتر -->
+  <footer>
+    <p style="margin: 5px 0; font-size: 14px;">جميع الحقوق محفوظة © روضة وإبتدائية سمية بنت خياط</p>
+    <p style="margin: 0; font-size: 14px;">تمت البرمجة والتنسيق بواسطة أمينة مركز مصادر التعلم</p>
+    <p style="margin: 0; font-weight: bold; font-size: 15px;">الأستاذة / خديجة عيد البذيلي</p>
+    <p style="margin: 10px 0 0; font-size: 14px;">مديرة المدرسة: الأستاذة / سامية الجهني</p>
+  </footer>
+
+  <!-- السكربتات -->
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+
+    const searchBox = document.getElementById("search");
+    const items = document.querySelectorAll(".item");
+
+    searchBox.addEventListener("input", () => {
+      const val = searchBox.value.toLowerCase();
+      items.forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(val) ? "block" : "none";
+      });
+    });
+
+    function filterItems(type) {
+      const items = document.querySelectorAll('.item');
+      items.forEach(item => {
+        if (type === 'all' || item.classList.contains(type)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    function closePopup() {
+      document.getElementById("welcome-popup").style.display = "none";
+    }
+
+
+  </script>
+
+</body>
+</html>
